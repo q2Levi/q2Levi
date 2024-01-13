@@ -9,53 +9,71 @@ pipeline {
 
     stage('Checkout source code') {
       steps {
-        git branch: 'master',
-        url: 'https://github.com/q2Levi/q2Levi.git'
-        sh 'ls -la'
+        script {
+          // Thực hiện checkout mã nguồn
+          git branch: 'master',
+          url: 'https://github.com/q2Levi/q2Levi.git'
+        }
       }
     }
 
-    // checkout based on configure in current Jenkins Job Build
-    // stage('Checkout current code') {
-    //     steps {
-    //         checkout
-    //     }
-    // }
-
-    stage ('Install dependencies') {
-      tools {
-        nodejs 'NodeJS 16.20.2'
-      }
+    stage('Install dependencies') {
       steps {
-        sh '''
-          echo "Installing..."
-          npm install
-          echo "Install dependencies successfully."
-          ls -al
-        '''
+        script {
+          // Sử dụng Node.js 16.20.2
+          def nodejsInstallationName = 'NodeJS 16.20.2'
+
+          // Chắc chắn rằng Node.js và npm đã được cài đặt
+          tool name: nodejsInstallationName, type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+
+          // Thực hiện cài đặt dependencies
+          sh '''
+            echo "Installing dependencies..."
+            npm install
+            echo "Install dependencies successfully."
+            ls -al
+          '''
+        }
       }
     }
 
-    stage ('Build') {
+    stage('Build') {
       steps {
-        nodejs(nodeJSInstallationName: 'NodeJS 16.20.2') {
-          sh 'echo "Build application..."'
-          sh 'npm run build'
-          sh 'echo "Build application successfully."'
-          sh 'ls -al'
+        script {
+          // Sử dụng Node.js 16.20.2
+          def nodejsInstallationName = 'NodeJS 16.20.2'
+
+          // Chắc chắn rằng Node.js và npm đã được cài đặt
+          tool name: nodejsInstallationName, type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+
+          // Thực hiện xây dựng ứng dụng
+          sh '''
+            echo "Building application..."
+            npm run build
+            echo "Build application successfully."
+            ls -al
+          '''
         }
       }
     }
     
-    stage ('Test') {
-      tools {
-        nodejs 'NodeJS 16.20.2'
-      }
+    stage('Test') {
       steps {
-        sh 'echo "Run unit test..."'
-        sh 'npm test'
-        sh 'echo "Run unit test successfully."'
-        sh 'ls -al'
+        script {
+          // Sử dụng Node.js 16.20.2
+          def nodejsInstallationName = 'NodeJS 16.20.2'
+
+          // Chắc chắn rằng Node.js và npm đã được cài đặt
+          tool name: nodejsInstallationName, type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+
+          // Thực hiện chạy bài kiểm tra
+          sh '''
+            echo "Running unit tests..."
+            npm test
+            echo "Run unit tests successfully."
+            ls -al
+          '''
+        }
       }
     }
   }
