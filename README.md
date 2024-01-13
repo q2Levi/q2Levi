@@ -10,7 +10,7 @@ pipeline {
     stage('Checkout source code') {
       steps {
         git branch: 'master',
-        url: 'https://github.com/q2Levi/ngocthanh.git/react-for-demo.git'
+        url: 'https://github.com/q2Levi/q2Levi/tree/main'
         sh 'ls -la'
       }
     }
