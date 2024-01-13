@@ -1,4 +1,9 @@
+pipeline {
+  agent { label 'linux-slave' }
 
+  options {
+    skipDefaultCheckout()
+  }
 
   stages {
 
