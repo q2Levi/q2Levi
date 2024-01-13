@@ -10,7 +10,7 @@ pipeline {
     stage('Checkout source code') {
       steps {
         git branch: 'master',
-        url: 'https://github.com/q2Levi/q2Levi/edit/main/ReactJS%20Pipeline'
+        url: 'https://github.com/q2Levi/q2Levi.git'
         sh 'ls -la'
       }
     }
